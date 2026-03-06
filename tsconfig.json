@@ -1,0 +1,33 @@
+{
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        "noImplicitAny": true,
+        "noUncheckedIndexedAccess": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@app/*": [
+                "./app/*"
+            ],
+            "@assets/*": [
+                "./assets/*"
+            ]
+        },
+        "types": [
+            "@types/react",
+            "@types/react-native"
+        ]
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        ".expo/types/**/*.d.ts",
+        "expo-env.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "supabase/functions"
+    ]
+}
