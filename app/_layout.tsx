@@ -7,7 +7,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Purchases from '@revenuecat/purchases-react-native';
+import Purchases from 'react-native-purchases';
 import { useAuthStore } from '@/stores/useAuthStore';
 
 const queryClient = new QueryClient({

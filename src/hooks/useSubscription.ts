@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import Purchases from '@revenuecat/purchases-react-native';
-import type { CustomerInfo } from '@revenuecat/purchases-react-native';
+import Purchases from 'react-native-purchases';
+import type { CustomerInfo } from 'react-native-purchases';
 
 export const SUBSCRIPTION_QUERY_KEY = (userId: string) =>
     ['subscription', userId] as const;
