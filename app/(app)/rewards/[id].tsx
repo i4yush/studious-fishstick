@@ -21,18 +21,15 @@ export default function RewardDetailRoute() {
     const handleClaim = async () => {
         if (!user || !reward) return;
         try {
-            const result = await awardXP({
+            await rewardService.claimReward({
                 userId: user.id,
-                amount: reward.xp_cost,
-                source: 'reward_claimed',
+                rewardId: reward.id,
             });
             analyticsService.rewardClaimed(reward.id, reward.tier);
-            if (result.badgeUnlocked) {
-                setBadgeName('New Badge');
-                setBadgeUnlocked(true);
-            }
-        } catch {
-            Alert.alert('Error', 'Could not claim reward. Please try again.');
+            Alert.alert('Success', 'Reward claimed successfully!');
+            router.back();
+        } catch (error: any) {
+            Alert.alert('Error', error.message || 'Could not claim reward. Please try again.');
         }
     };
 
