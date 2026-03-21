@@ -42,3 +42,25 @@ export const XP_PREMIUM_MULTIPLIER = 2;
 // Pagination
 export const LEADERBOARD_PAGE_SIZE = 20;
 export const NOTIFICATIONS_PAGE_SIZE = 50;
+
+// ---------------------------------------------------------------------------
+// Brand Identity — RUNNR Void Red
+// ---------------------------------------------------------------------------
+
+export const BRAND = {
+    /** True black void background */
+    VOID_BLACK: '#0A0A0A',
+    /** Sprint Red — primary accent */
+    SPRINT_RED: '#FF4D2E',
+    /** Runnr Lime — FOMO / data accent */
+    RUNNR_LIME: '#C8F135',
+    /** Surface — card / input backgrounds */
+    SURFACE: '#111111',
+    /** Muted — borders and dividers */
+    MUTED: '#3A3A3A',
+} as const;
+
+// Font families (loaded via expo-font in app/_layout.tsx)
+export const FONT_DISPLAY = 'BebasNeue';
+export const FONT_BODY = 'Syne';
+export const FONT_MONO = 'SpaceMono';

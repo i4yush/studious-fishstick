@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Runnr",
+    "slug": "runnr",
+    "extra": {
+      "eas": {
+        "projectId": "bac7a7be-7b3d-4165-84de-6eb997da2bb8"
+      }
+    },
+    "android": {
+      "package": "com.runnr07.runnr"
+    }
+  }
+}

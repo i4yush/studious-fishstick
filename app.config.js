@@ -43,6 +43,7 @@ const config = {
     },
     web: {
         favicon: "./assets/images/favicon.png",
+        bundler: "metro",
     },
     plugins: [
         "expo-router",
@@ -66,7 +67,6 @@ const config = {
                 ],
             },
         ],
-        ["expo-auth-session", { "scheme": "projectrun" }],
     ],
     scheme: "projectrun",
     experiments: {

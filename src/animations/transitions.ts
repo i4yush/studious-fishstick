@@ -1,3 +1,4 @@
+import { Easing } from 'react-native-reanimated';
 import type { WithSpringConfig, WithTimingConfig } from 'react-native-reanimated';
 
 /** Standard spring for card/modal entrances. */
@@ -32,3 +33,30 @@ export const fadeOutTiming: WithTimingConfig = {
 
 /** Standard page transition duration (ms). */
 export const PAGE_TRANSITION_DURATION = 300;
+
+// ---------------------------------------------------------------------------
+// Onboarding animation configs
+// ---------------------------------------------------------------------------
+
+/** Logo SVG draw-on — cubic ease-out over 1.2s */
+export const logoDrawTiming: WithTimingConfig = {
+    duration: 1200,
+    easing: Easing.out(Easing.cubic),
+};
+
+/** Route trace SVG animation — cubic ease-out over 1.8s */
+export const routeTraceTiming: WithTimingConfig = {
+    duration: 1800,
+    easing: Easing.out(Easing.cubic),
+};
+
+/** CTA button press feedback — fast (80ms) */
+export const ctaPressTiming: WithTimingConfig = {
+    duration: 80,
+};
+
+/** Stats counter number roll-up — quad ease-out over 800ms */
+export const statsCountTiming: WithTimingConfig = {
+    duration: 800,
+    easing: Easing.out(Easing.quad),
+};

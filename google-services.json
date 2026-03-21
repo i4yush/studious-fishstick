@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906773110405",
+    "project_id": "runnr-c4ebe",
+    "storage_bucket": "runnr-c4ebe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906773110405:android:9b3676e01ce1c1db59d3ec",
+        "android_client_info": {
+          "package_name": "com.runnr07.runnr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906773110405-7g258o3c35idqsq51nf6ssts3bbstqt0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_UDgIFGalXJvc9apb760_cIxV9X_A19s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906773110405-7g258o3c35idqsq51nf6ssts3bbstqt0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

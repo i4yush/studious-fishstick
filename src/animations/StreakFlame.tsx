@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import LottieView from 'lottie-react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import LottieView from '@/components/common/LottieShim';
 
 interface StreakFlameProps {
     isActive: boolean;
@@ -8,15 +8,12 @@ interface StreakFlameProps {
 }
 
 export function StreakFlame({ isActive, size = 48 }: StreakFlameProps) {
+    // Note: streak-flame.json is missing from assets/lottie/
+    // Commenting out LottieView to prevent bundling error.
     return (
-        <LottieView
-            // Place streak-flame.json in assets/lottie/
-            source={require('../../assets/lottie/streak-flame.json')}
-            style={[styles.lottie, { width: size, height: size }]}
-            autoPlay={isActive}
-            loop={isActive}
-            speed={isActive ? 1 : 0}
-        />
+        <View style={[styles.lottie, { width: size, height: size, alignItems: 'center', justifyContent: 'center' }]}>
+            <Text style={{ fontSize: size * 0.6 }}>{isActive ? '🔥' : '⚪'}</Text>
+        </View>
     );
 }
 

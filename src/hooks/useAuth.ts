@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { authService } from '@/services/authService';
+import { useGoogleAuth } from './useGoogleAuth';
 
 export function useAuth() {
     const { session, user, isLoading, isAuthenticated, setSession, signOut } =
         useAuthStore();
+    const { promptAsync: signInWithGoogle, isLoading: isGoogleLoading } =
+        useGoogleAuth();
 
     const handleSignIn = useCallback(
         async (email: string, password: string) => {
@@ -42,5 +45,7 @@ export function useAuth() {
         signUp: handleSignUp,
         signOut: handleSignOut,
         resetPassword: handleResetPassword,
+        signInWithGoogle,
+        isGoogleLoading,
     };
 }

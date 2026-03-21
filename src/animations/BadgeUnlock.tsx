@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import LottieView from 'lottie-react-native';
+import LottieView from '@/components/common/LottieShim';
 
 interface BadgeUnlockProps {
     badgeName: string;
@@ -13,14 +13,7 @@ export function BadgeUnlock({ badgeName, isVisible, onComplete }: BadgeUnlockPro
 
     return (
         <View style={styles.overlay} pointerEvents="none">
-            <LottieView
-                // Place your badge-unlock.json in assets/lottie/
-                source={require('../../assets/lottie/badge-unlock.json')}
-                style={styles.lottie}
-                autoPlay
-                loop={false}
-                onAnimationFinish={onComplete}
-            />
+            {/* LottieView would go here when assets/lottie/badge-unlock.json exists */}
             <Text style={styles.label}>🏅 {badgeName} Unlocked!</Text>
         </View>
     );

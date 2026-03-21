@@ -20,10 +20,4 @@ export const authService = {
     getSession: () => supabase.auth.getSession(),
 
     getCurrentUser: () => supabase.auth.getUser(),
-
-    signInWithGoogle: () =>
-        supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: { redirectTo: 'projectrun://auth/callback' },
-        }),
 };
