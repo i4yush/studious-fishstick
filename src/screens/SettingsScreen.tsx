@@ -1,89 +1,174 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { Colors } from '@/constants/colors';
+import { Fonts } from '@/constants/fonts';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { analyticsService } from '@/services/analyticsService';
 
 export function SettingsScreen() {
-    const { user, signOut } = useAuthStore();
+  const { user, signOut } = useAuthStore();
+  const [notifications, setNotifications] = useState(true);
+  const [haptics, setHaptics] = useState(true);
 
-    const handleSignOut = async () => {
-        Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
-            { text: 'Cancel', style: 'cancel' },
-            {
-                text: 'Sign Out',
-                style: 'destructive',
-                onPress: async () => {
-                    analyticsService.reset();
-                    await signOut();
-                },
-            },
-        ]);
-    };
+  const SettingRow = ({ 
+    icon, 
+    label, 
+    value, 
+    onPress, 
+    isSwitch, 
+    switchValue, 
+    onSwitchChange 
+  }: { 
+    icon: string; 
+    label: string; 
+    value?: string; 
+    onPress?: () => void;
+    isSwitch?: boolean;
+    switchValue?: boolean;
+    onSwitchChange?: (val: boolean) => void;
+  }) => (
+    <Pressable 
+      style={styles.row} 
+      onPress={onPress}
+      disabled={isSwitch}
+    >
+      <View style={styles.rowLeft}>
+        <MaterialIcons name={icon as any} size={20} color={Colors.red} />
+        <Text style={styles.rowLabel}>{label}</Text>
+      </View>
+      
+      {isSwitch ? (
+        <Switch
+          value={switchValue}
+          onValueChange={onSwitchChange}
+          trackColor={{ false: '#333', true: Colors.red + '44' }}
+          thumbColor={switchValue ? Colors.red : '#666'}
+        />
+      ) : (
+        <View style={styles.rowRight}>
+          {value && <Text style={styles.rowValue}>{value}</Text>}
+          <MaterialIcons name="chevron-right" size={20} color={Colors.muted} />
+        </View>
+      )}
+    </Pressable>
+  );
 
-    const SettingRow = ({ label, value, onPress }: { label: string; value?: string; onPress?: () => void }) => (
-        <TouchableOpacity style={styles.row} onPress={onPress} activeOpacity={onPress ? 0.7 : 1}>
-            <Text style={styles.rowLabel}>{label}</Text>
-            {value && <Text style={styles.rowValue}>{value}</Text>}
-        </TouchableOpacity>
-    );
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <Text style={styles.title}>PROJECT: CONFIG</Text>
 
-    return (
-        <ScrollView style={styles.flex} contentContainerStyle={styles.content}>
-            <Text style={styles.heading}>Settings ⚙️</Text>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>SYSTEM</Text>
+        <SettingRow 
+          icon="notifications" 
+          label="NOTIFICATIONS" 
+          isSwitch 
+          switchValue={notifications} 
+          onSwitchChange={setNotifications} 
+        />
+        <SettingRow 
+          icon="vibration" 
+          label="HAPTIC FEEDBACK" 
+          isSwitch 
+          switchValue={haptics} 
+          onSwitchChange={setHaptics} 
+        />
+      </View>
 
-            <Text style={styles.sectionTitle}>Account</Text>
-            <View style={styles.section}>
-                <SettingRow label="Email" value={user?.email ?? '—'} />
-                <SettingRow label="User ID" value={user?.id.slice(0, 8) + '...' ?? '—'} />
-            </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>ACCOUNT</Text>
+        <SettingRow icon="person" label="IDENTITY" value={user?.email || 'v0id_walker'} />
+        <SettingRow icon="verified-user" label="SECURITY" />
+        <SettingRow icon="history" label="RUN LOGS" />
+      </View>
 
-            <Text style={styles.sectionTitle}>Subscription</Text>
-            <View style={styles.section}>
-                <SettingRow label="Upgrade to Premium" onPress={() => {/* open paywall */ }} />
-                <SettingRow label="Restore Purchases" onPress={() => {/* restore */ }} />
-            </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>ABOUT</Text>
+        <SettingRow icon="info" label="VERSION" value="1.0.4-BETA" />
+        <SettingRow icon="description" label="LEGAL" />
+      </View>
 
-            <Text style={styles.sectionTitle}>Notifications</Text>
-            <View style={styles.section}>
-                <SettingRow label="Push Notifications" value="Enabled" />
-                <SettingRow label="Streak Reminders" value="On" />
-            </View>
-
-            <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut} activeOpacity={0.85}>
-                <Text style={styles.signOutText}>Sign Out</Text>
-            </TouchableOpacity>
-        </ScrollView>
-    );
+      <Pressable style={styles.logoutButton} onPress={() => signOut()}>
+        <Text style={styles.logoutText}>TERMINATE SESSION</Text>
+      </Pressable>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    flex: { flex: 1, backgroundColor: '#0F0F0F' },
-    content: { padding: 24, gap: 12, paddingTop: 60 },
-    heading: { color: '#fff', fontSize: 28, fontWeight: '800', marginBottom: 8 },
-    sectionTitle: { color: '#9CA3AF', fontSize: 12, fontWeight: '700', textTransform: 'uppercase', marginTop: 8 },
-    section: {
-        backgroundColor: '#1A1A2E',
-        borderRadius: 16,
-        overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: '#2D2D4D',
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#2D2D4D',
-    },
-    rowLabel: { color: '#fff', fontSize: 15 },
-    rowValue: { color: '#6B7280', fontSize: 14 },
-    signOutBtn: {
-        marginTop: 16,
-        backgroundColor: '#EF4444',
-        borderRadius: 14,
-        paddingVertical: 14,
-        alignItems: 'center',
-    },
-    signOutText: { color: '#fff', fontSize: 16, fontWeight: '700' },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.black,
+  },
+  content: {
+    paddingTop: 64,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+  title: {
+    fontFamily: Fonts.display,
+    fontSize: 32,
+    color: Colors.white,
+    letterSpacing: 4,
+    marginBottom: 40,
+  },
+  section: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontFamily: Fonts.mono,
+    fontSize: 10,
+    color: Colors.red,
+    letterSpacing: 2,
+    marginBottom: 12,
+    marginLeft: 4,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.muted + '11',
+    borderRadius: 12,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: Colors.muted + '22',
+  },
+  rowLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  rowLabel: {
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    color: Colors.white,
+    letterSpacing: 1,
+  },
+  rowRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  rowValue: {
+    fontFamily: Fonts.mono,
+    fontSize: 12,
+    color: Colors.muted,
+  },
+  logoutButton: {
+    marginTop: 20,
+    backgroundColor: Colors.red + '22',
+    borderRadius: 12,
+    paddingVertical: 18,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Colors.red,
+  },
+  logoutText: {
+    fontFamily: Fonts.display,
+    fontSize: 16,
+    color: Colors.red,
+    letterSpacing: 2,
+  },
 });

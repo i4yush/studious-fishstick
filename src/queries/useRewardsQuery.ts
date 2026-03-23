@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/supabase/client';
-import type { RewardRow, RewardTier } from '@/supabase/types';
 
-export const REWARDS_QUERY_KEY = (tier?: RewardTier) =>
+export const REWARDS_QUERY_KEY = (tier?: any) =>
     ['rewards', tier ?? 'all'] as const;
 
-export function useRewardsQuery(tier?: RewardTier) {
-    return useQuery<RewardRow[], Error>({
+export function useRewardsQuery(tier?: any) {
+    return useQuery<any[], Error>({
         queryKey: REWARDS_QUERY_KEY(tier),
         staleTime: 10 * 60 * 1000, // 10 min — catalog changes rarely
         queryFn: async () => {
@@ -28,7 +27,7 @@ export function useRewardsQuery(tier?: RewardTier) {
 }
 
 export function useRewardDetailQuery(rewardId: string | undefined) {
-    return useQuery<RewardRow, Error>({
+    return useQuery<any, Error>({
         queryKey: ['reward', rewardId],
         enabled: !!rewardId,
         staleTime: 10 * 60 * 1000,

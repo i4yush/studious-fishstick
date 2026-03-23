@@ -7,6 +7,7 @@ import { useXP } from '@/hooks/useXP';
 import { XPPopAnimation } from '@/animations/XPPopAnimation';
 import { BadgeUnlock } from '@/animations/BadgeUnlock';
 import { analyticsService } from '@/services/analyticsService';
+import { rewardService } from '@/services/rewardService';
 
 export default function RewardDetailRoute() {
     const { id } = useLocalSearchParams<{ id: string }>();

@@ -1,12 +1,10 @@
 import { useCallback } from 'react';
 import { useXPStore } from '@/stores/useXPStore';
 import { rewardService } from '@/services/rewardService';
-import type { XPSource } from '@/supabase/types';
-
 interface AwardXPParams {
     userId: string;
     amount: number;
-    source: XPSource;
+    source: string;
 }
 
 interface AwardXPResult {
