@@ -52,3 +52,11 @@ expo-env.d.ts
 credentials.json
 npm_error.log
 # @end expo-cli
+
+# Agentic Artifacts
+.agents/
+docs/
+
+# Custom Exclusions
+note
+stitch_home_dashboard.zip

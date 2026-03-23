@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Session, User } from '@supabase/supabase-js';
+import Constants from 'expo-constants';
 import { supabase } from '@/supabase/client';
 
 interface AuthState {
@@ -38,6 +39,27 @@ export const useAuthStore = create<AuthState>((set) => ({
      * and subscribes to auth state changes for the app lifetime.
      */
     initialize: async () => {
+        // Auth bypass for Expo Go
+        if (Constants.appOwnership === 'expo') {
+            console.warn('Auth Bypass Active: Mocking session in Expo Go');
+            const mockUser: User = {
+                id: 'mock-user-123',
+                email: 'test@example.com',
+                app_metadata: {},
+                user_metadata: { full_name: 'Test User' },
+                aud: 'authenticated',
+                created_at: new Date().toISOString(),
+            } as any;
+
+            set({
+                session: { user: mockUser, access_token: 'mock-token', refresh_token: 'mock-token' } as any,
+                user: mockUser,
+                isAuthenticated: true,
+                isLoading: false,
+            });
+            return;
+        }
+
         const { data } = await supabase.auth.getSession();
         set({
             session: data.session,
@@ -48,6 +70,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
         // Keep the store in sync for the lifetime of the app
         supabase.auth.onAuthStateChange((_event, session) => {
+            if (Constants.appOwnership === 'expo') return; // Don't override mock
+
             set({
                 session,
                 user: session?.user ?? null,

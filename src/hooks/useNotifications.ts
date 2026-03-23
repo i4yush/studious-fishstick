@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as ExpoNotifications from 'expo-notifications';
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 import { notificationService } from '@/services/notificationService';
 
 ExpoNotifications.setNotificationHandler({
@@ -23,6 +24,12 @@ export function useNotifications({ userId }: UseNotificationsOptions) {
 
     useEffect(() => {
         if (!userId) return;
+
+        // Skip notifications setup in Expo Go
+        if (Constants.appOwnership === 'expo') {
+            console.warn('Push notifications are not supported in Expo Go with SDK 54. Skipping setup.');
+            return;
+        }
 
         const setup = async () => {
             // 1. Request permission

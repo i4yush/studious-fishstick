@@ -9,6 +9,7 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Purchases from '@/lib/purchases';
 import * as SplashScreen from 'expo-splash-screen';
+import Constants from 'expo-constants';
 import { useFonts } from 'expo-font';
 import { useAuthStore } from '@/stores/useAuthStore';
 
@@ -48,8 +49,8 @@ export default function RootLayout() {
     useEffect(() => {
         void initialize();
 
-        // Configure RevenueCat (Native only)
-        if (Platform.OS !== 'web') {
+        // Configure RevenueCat (Native only, skip in Expo Go)
+        if (Platform.OS !== 'web' && Constants.appOwnership !== 'expo') {
             const apiKey = Platform.select({
                 ios: process.env.EXPO_PUBLIC_REVENUECAT_IOS,
                 android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID,
