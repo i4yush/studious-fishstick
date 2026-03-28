@@ -53,7 +53,7 @@ export default function RegisterScreen() {
         try {
             const result = await signInWithGoogle();
             if (result?.type === 'success') {
-                router.replace('/(onboarding)/welcome');
+                router.replace('/(app)/dashboard');
             }
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : 'Google sign-up failed. Please try again.';

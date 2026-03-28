@@ -25,9 +25,6 @@ build/
 .env.production.local
 .env*.local
 
-# Supabase
-supabase/
-.supabase/
 
 # IDEs/Editors
 .vscode/
